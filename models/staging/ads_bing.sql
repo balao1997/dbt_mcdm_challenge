@@ -1,12 +1,12 @@
 select 
-    ad_id as id,
+    ad_id,
     adset_id,
     campaign_id,
+    channel,
     clicks, 
-    imps,
+    date,
+    imps as impressions,
     revenue, 
     spend, 
-    conv,
-    __insert_date as inserted_at,
-    date
+    conv as total_conversions
 from {{ ref('src_ads_bing_all_data')}}
