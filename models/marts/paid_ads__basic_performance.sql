@@ -48,13 +48,13 @@ facebook as (
     shares,
     spend, 
     null as total_conversions,
-    null as video_views,
+    views as video_views,
     ad_id,
     adset_id,
     campaign_id,
     channel, 
     creative_id,
-    null as placement_id
+    null as placement_id    
     from {{ ref('ads_facebook')}}
 ),
 
@@ -118,7 +118,7 @@ twitter as (
      from {{ ref('ads_twitter')}}
 ),
 
-all_data as (
+paid_ads__basic_performance as (
     select * from bing
     union all
     select * from facebook
@@ -129,8 +129,12 @@ all_data as (
 ),
 
 final as (
-    select channel, SUM(spend) / SUM(coalesce(total_conversions, purchase)) AS conversion_cost    
-    from all_data
+    select channel, 
+           round(sum(spend) / sum(coalesce(total_conversions, purchase)), 2) as conversion_cost,
+           round(sum(spend) / sum(coalesce(engagements, likes + shares + comments + clicks + video_views)), 2) as engagement_cost,
+           sum(impressions) as impressions,
+           round(sum(spend) / sum(clicks), 2) as cpc
+    from paid_ads__basic_performance
     group by channel
 )
 

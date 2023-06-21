@@ -15,5 +15,6 @@ select
     purchase,
     complete_registration as registrations,
     shares,
-    spend
+    spend,
+    views
  from {{ ref('src_ads_creative_facebook_all_data')}}
