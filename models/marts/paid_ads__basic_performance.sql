@@ -29,7 +29,33 @@ with bing as (
 ),
 
 facebook as (
-    select * from {{ ref('ads_facebook')}}
+    select 
+    date,
+    add_to_cart,
+    clicks, 
+    comments,
+    null as engagements,
+    impressions,
+    installs,
+    likes,
+    link_clicks,
+    null as post_click_conversions,
+    null as post_view_conversions,
+    null as posts,
+    purchase, 
+    registrations,
+    null as revenue,
+    shares,
+    spend, 
+    null as total_conversions,
+    null as video_views,
+    ad_id,
+    adset_id,
+    campaign_id,
+    channel, 
+    creative_id,
+    null as placement_id
+    from {{ ref('ads_facebook')}}
 ),
 
 tiktok as (
@@ -42,6 +68,8 @@ twitter as (
 
 final as (
     select * from bing
+    union all
+    select * from facebook
 )
 
 select * from final
