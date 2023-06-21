@@ -1,4 +1,4 @@
-To add data from new ad platform, you should:
-1. Add new raw data to seed in csv format
-2. In folder models/staging create a new view with fields that we need for dashboard
-3. Add new CTE with this view in file models/marts/paid_ads__basic_performance.sql and add it to query paid_ads__basic_performance using union all
+In order to include data from a new ad platform, follow these steps:
+1. Import the new raw data in CSV format to the seed.
+2. Create a new view in the folder "models/staging" with the necessary fields for the dashboard.
+3. Add a new CTE with this view to the file "models/marts/paid_ads__basic_performance.sql" and include it in the query "paid_ads__basic_performance" using "union all".
