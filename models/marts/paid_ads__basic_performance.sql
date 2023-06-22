@@ -34,7 +34,7 @@ facebook as (
     add_to_cart,
     clicks, 
     comments,
-    null as engagements,
+    likes + shares + comments + clicks + views as engagements,
     impressions,
     installs,
     likes,
@@ -47,8 +47,8 @@ facebook as (
     null as revenue,
     shares,
     spend, 
-    null as total_conversions,
-    views as video_views,
+    purchase as total_conversions,
+    null as video_views,
     ad_id,
     adset_id,
     campaign_id,
@@ -130,8 +130,8 @@ paid_ads__basic_performance as (
 
 final as (
     select channel, 
-           round(sum(spend) / sum(coalesce(total_conversions, purchase)), 2) as conversion_cost,
-           round(sum(spend) / sum(coalesce(engagements, likes + shares + comments + clicks + video_views)), 2) as engagement_cost,
+           round(sum(spend) / sum(total_conversions), 2) as conversion_cost,
+           round(sum(spend) / sum(engagements), 2) as engagement_cost,
            sum(impressions) as impressions,
            round(sum(spend) / sum(clicks), 2) as cpc
     from paid_ads__basic_performance
